@@ -3,6 +3,7 @@ var path = require('path');
 var express = require('express');
 var Handlebars = require('handlebars');
 var classes = require('./class_info.json');
+
 var app = express();
 var port = process.env.PORT || 8889;
 
