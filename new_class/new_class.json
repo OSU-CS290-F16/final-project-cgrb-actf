@@ -1,0 +1,14 @@
+{"class_info":
+    {
+        "class_name": "Please_work",
+        "readable_name": "New Class",
+        "first": "Ln",
+        "last": "Miller",
+        "email": "millelof@oregonstate.edu",
+        "user": "millelog",
+        "hostname": "jupyter.cgrb.oregonstate.local",
+        "version": "latest",
+        "mem_limit": "32GB",
+        "cpu_share": "1024"
+    }
+}

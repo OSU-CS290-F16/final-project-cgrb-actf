@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Advanced Cyberinfrastrcutre Teaching Facility</title>
+
+    <!-- This is a 3rd-party stylesheet for Font Awesome: http://fontawesome.io/ -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" media="screen">
+
+    <link rel="stylesheet" href="style.css" media="screen">
+
+  </head>
+  <body>
+
+    <header>
+
+      <!-- The <i> tag below includes the sticky note icon from Font Awesome -->
+
+      <div id='header-logo'>
+        <a href="http://cgrb.oregonstate.edu"><img
+          src = "images/combo-logo-invert.png"
+          width = '1100' height= '90' /></a>
+      </div>
+      <div id='osu-header-logo'>
+        <a href='http://oregonstate.edu'><img
+          src = "images/osu-tag.png"
+          height = '100' /></a>
+      </div>
+
+      <nav>
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="index.html">Home</a></li>
+          <li class="navbar-item navbar-dropdown">Classes</li>
+          <div id='class-dropdown' class='dropdown-content'>
+          </div>
+          <li class="navbar-item navbar-right"><a href="http://cgrb.oregonstate.edu/contact-us">Contact</a></li>
+        </ul>
+      </nav>
+
+    </header>
+
+    <main class=flex-main>
+
+      <section class=body-section>
+        <h2>Introduction</h2>
+        <p>The CGRB has hosted infrastructure for teaching purposes for several years.
+          This continues to grow into the Advanced Cyberinfrastructure Teaching
+          Facility (ACTF). On top of this system we have developed Docker-based
+          containers, providing:</p>
+        <ul>
+          <li>Web-based command-line access</li>
+          <li>Access to the full suite of CGRB-curated bioinformatics software, as well as custom scripts and installs</li>
+          <li>upyter notebooks for instruction in Python, C, and other languages</li>
+          <li>RStudio for R-based instruction</li>
+        </ul>
+        <p>The containers and authentication methods together provide:</p>
+        <ul>
+          <li>Dynamic, adjustable, and per-class resource allocation (CPU, IO, RAM, disk)</li>
+          <li>Per-class instructor and student groups</li>
+          <li>Data persistence (for homeworks, grading, sharing of code, documents and data.)</li>
+      </section>
+
+      <section class=body-section>
+        <h2>About the ACTF</h2>
+        <p>In addition to computing resources for research, the CGRB hosts the
+          Advanced Cyberinfrastructure Teaching Facility, or ACTF, providing
+          dedicated high-performance-computing resources for instructional needs.
+          These include:</p>
+        <ul>
+          <li>Over 300 CPU cores across 6 high-core-count, high-memory machines</li>
+          <li>A total of over 2 TB of RAM</li>
+          <li>Over 100 TB of 10GbE networked ZFS file space</li>
+          <li>Web-hosting resources</li>
+          <li>Software management for instruction</li>
+        </ul>
+        <p>On the ACTF, learners and instructors explore computation at the
+           big-data end of the spectrum, in topics ranging from Bioinformatics
+           to Data Mining.</p>
+      </section>
+
+      <section class='body-screenshots'>
+        <h2>Screenshots</h2>
+        <div class=screenshot>
+          <img src='images/screenshot0.png'>
+          <h3>Jupyter Login</h3>
+        </div>
+        <div class=screenshot>
+          <img src='images/screenshot1.png'>
+          <h3>Rstudio Server</h3>
+        </div>
+        <div class=screenshot>
+          <img src='images/screenshot2.png'>
+          <h3>Interactive widgets and embedded multimedia</h3>
+        </div>
+        <div class=screenshot>
+          <img src='images/screenshot3.png'>
+          <h3>File browser and management, with basic text editor</h3>
+        </div>
+        <div class=screenshot>
+          <img src='images/screenshot4.png'>
+          <h3>Web-accessible command-line, with all CGRB software</h3>
+        </div>
+        <div class=screenshot>
+          <img src='images/screenshot5.png'>
+          <h3>Create notebooks for your students to work on</h3>
+        </div>
+        <div class=screenshot>
+          <img src='images/screenshot6.png'>
+          <h3>Browse and manage student files</h3>
+        </div>
+        <div class=screenshot>
+          <img src='images/screenshot7.png'>
+          <h3>Notebooks for multiple languages (in progress; C shown)</h3>
+        </div>
+
+      </section>
+
+      <section class=body-section>
+        <h2>Architecture</h2>
+        <p>Accounts are authenticated by the CGRB independently of class
+          containers (allowing direct SSH access on campus). Web-accessible
+          “Containers” are Docker containers hosting JupyterHub as well as
+           RStudio Server, from a custom image based on CentOS7. Containers
+          map in NFS mounts from ZFS-backed servers (for software and home dirs).
+          For ease of web-access to individual containers, a reverse proxy (nginx)
+           maps class-specific URLs to internal resources.</p>
+        <img src='images/architecture.png'>
+      </section>
+
+      <section class=body-section>
+        <h2>Future Work</h2>
+        <p>Currently ACTF containers are in “beta.” Additional features we plan to incorporate include:</p>
+        <ul>
+          <li>End-to-end SSL encryption</li>
+          <li>Cleaner management of class accounts</li>
+          <li>Tools for easy migration of class data from term-to-term</li>
+          <li>Tracking of student activities for instructor analysis</li>
+        </ul>
+        <p>Docker containers provide additional potentials:</p>
+        <ul>
+          <li>Running cloud-hosted containers</li>
+          <li>Per-student or per-session containers, allowing class resources to scale across machines dynamically</li>
+        </ul>
+    </main>
+
+    <footer>
+        <div class='cgrb-footer-logo'>
+            <a href='http://cgrb.oregonstate.edu'><img
+               src = "images/cgrb-logo.png"
+               height = '50' /></a>
+        </div>
+    </footer>
+
+
+
+  </body>
+
+  <script src="index.js"></script>
+
+</html>
