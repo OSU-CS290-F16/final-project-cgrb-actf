@@ -7,10 +7,6 @@ var classes = require('./class_info.json');
 var app = express();
 var port = process.env.PORT || 8889;
 
-//Read the source of class page template and compile it with handlebars
-//var classPageSource = fs.readFileSync(path.join(__dirname,'public', 'class_template.html'), 'utf8');
-//var classPageTemplate = Handlebars.compile(classPageSource);
-
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars');
 
