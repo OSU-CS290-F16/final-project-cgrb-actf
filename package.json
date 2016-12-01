@@ -4,7 +4,8 @@
   "description": "**Due at 4:59pm on Friday 10/21/2016**",
   "main": "class_server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "node class_server.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/OSU-CS290-F16/final-project-cgrb-actf#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.6",
     "shell-escape": "^0.2.0"
   }

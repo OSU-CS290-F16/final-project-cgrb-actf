@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-
     <meta charset="utf-8">
-    <title>{{class_name}}</title>
-
-    <!-- This is a 3rd-party stylesheet for Font Awesome: http://fontawesome.io/ -->
+    <title>Advanced Cyberinfrastrcutre Teaching Facility</title>
+    
+		<!-- This is a 3rd-party stylesheet for Font Awesome: http://fontawesome.io/ -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" media="screen">
-
-    <link rel="stylesheet" href="style.css" media="screen">
-
+    <link rel="stylesheet" href="style.css" media="screen">		
+		<link rel="stylesheet" href="/style.css">
+		
   </head>
   <body>
 
-    <header>
+	  <header>
 
       <!-- The <i> tag below includes the sticky note icon from Font Awesome -->
 
@@ -39,40 +38,20 @@
       </nav>
 
     </header>
+	
+		{{{body}}}
 
-    <main>
-      <h1>{{readable_name}} ({{class_name}})</h1>
-      <h2>with {{last}}, {{first}} ({{email}})</h2>
-      <h3 id="term">{{term}}</h3>
-      <h2 id='platforms'>Platforms</h2>
-
-    <section class="externals">
-      <a href='https://jupyter.cgrb.oregonstate.edu/{{class_name}}/jupyter'><img
-        src='images/jupyter-logo.png'
-        alt=' Jupyter '
-        height = 50/></a>
-      <a href='https://jupyter.cgrb.oregonstate.edu/{{class_name}}/rstudio'><img
-        src='images/rstudio-logo.png'
-        alt=' Rstudio '
-        height = 50/></a>
-      <a href='https://jupyter.cgrb.oregonstate.edu/{{class_name}}/local/www/dokuwiki'><img
-        src='images/dokuwiki.png'
-        alt=' Dokuwiki '
-        height=50/></a>
-    </section>
-
-    </main>
-
-    <footer>
+		<footer>
         <div class='cgrb-footer-logo'>
             <a href='http://cgrb.oregonstate.edu'><img
                src = "images/cgrb-logo.png"
-               height = '40' /></a>
+               height = '50' /></a>
         </div>
-    </footer>
-
-
+    </footer>	
+		
   </body>
-  <script src="index.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.runtime.js"></script>
+  <script src="/index.js"></script>
 
 </html>
