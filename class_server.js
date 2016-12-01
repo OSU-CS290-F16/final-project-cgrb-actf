@@ -10,11 +10,14 @@ var port = process.env.PORT || 8889;
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars');
 
+app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/classes', express.static(path.join(__dirname, 'public')));
 
-app.get('/classes', function(req, res, next) {
+app.get('/', function(req, res, next) {
 	res.render('index');
 });
+
+
 
 app.get('/classes/:thisClass', function(req, res, next) {
 	var class_info = classes[req.params.thisClass];
