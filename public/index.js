@@ -49,4 +49,30 @@ function populateDropDown(classList){
     }
 }
 
+function addClass() {
+	/*
+		Read the following form ids:
+			instructor-id
+			instructor-first
+			instructor-last
+			email
+			class-code
+			class-name
+			description
+	*/
+	var instructorId = document.getElementById('instructor-id').value;
+	var instructorFirst = document.getElementById('instructor-first').value;
+	var instructorLast = document.getElementById('instructor-last').value;
+	var email = document.getElementById('email').value;
+	var classCode = document.getElementById('class-code').value;
+	var className = document.getElementById('class-name').value;
+	var description = document.getElementById('description').value;
+}
+
+
 populateDropDown();
+
+window.addEventListener('DOMContentLoaded', function (event) {
+	// Add new class button
+	document.querySelector('.add-class-button').addEventListener('click', addClass);
+});

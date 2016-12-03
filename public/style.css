@@ -200,3 +200,47 @@ main h3{
     margin: 25px;
     text-align: center;
  }
+ 
+ .create-input label {
+	width: 100px;
+	display: inline-block;
+	text-align: left;
+	margin: 2px;
+ }
+ 
+.create-form {
+	text-align: center;
+	margin: 50px auto;
+	position: relative;
+	text-align: center;
+}
+
+.create-class-info, .create-user-info {
+	width: 300px;
+	margin: auto;
+	border: 2px solid black;
+	border-radius: 10px;
+	background-color: white;
+	padding: 10px 10px 20px 10px;
+	margin: 20px auto;
+}
+
+.create-class-info::before, .create-user-info::before {
+	color: #b96500;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.create-class-info::before {
+	content: "Class info";
+}
+
+.create-user-info::before {
+	content: "User info";
+}
+
+.add-class-button {
+	font-size: 16px;
+	position: relative;
+	left: 100px;
+}
