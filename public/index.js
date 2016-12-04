@@ -67,6 +67,29 @@ function addClass() {
 	var classCode = document.getElementById('class-code').value;
 	var className = document.getElementById('class-name').value;
 	var description = document.getElementById('description').value;
+	
+	console.log(instructorId + instructorFirst + instructorLast + email + classCode + className + description);
+	
+	var postRequest = new XMLHttpRequest();
+	postRequest.open('POST', '/classes/create/add');
+	postRequest.setRequestHeader('Content-Type', 'application/json');
+
+	postRequest.addEventListener('load', function (event) {
+		var error;
+		if (event.target.status !== 200) {
+			error = event.target.response;
+		}
+	});
+
+	postRequest.send(JSON.stringify({
+		instructorId: instructorId,
+		instructorFirst: instructorFirst,
+		instructorLast: instructorLast,
+		email: email,
+		classCode: classCode,
+		className: className,
+		description: description
+	}));
 }
 
 
