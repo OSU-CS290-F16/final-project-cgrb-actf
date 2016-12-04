@@ -4,6 +4,8 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var classes = require('./class_info.json');
+var shellescape = require('shell-escape');
+var child_process = require('child_process');
 
 var app = express();
 var port = process.env.PORT || 8889;
@@ -15,14 +17,41 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/classes', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
+// Run the python script to add a new class
 app.post('/classes/create/add', function(req, res) {
-	console.log('Creating class');
+	
 	console.log(req.body);
-	if (req.body) {
-		console.log(req.body.instructorId + req.body.instructorFirst + req.body.instructorLast + req.body.email + req.body.classCode + req.body.className + req.body.description);
+	
+	if (req.body 
+			&& req.body.classCode
+			&& req.body.className
+			&& req.body.instructorFirst 
+			&& req.body.instructorLast
+			&& req.body.email
+			&& req.body.instructorId)
+	{
+		// Construct the list of arguments
+		args = ['create_class'
+			,'-c', req.body.classCode
+			,'-r', req.body.className
+			,'-f', req.body.instructorFirst 
+			,'-l', req.body.instructorLast
+			,'-e', req.body.email
+			,'-u', req.body.instructorId];
+			
+		// Escape the arguments to prevent injection attacks
+		var escapedArgs = shellescape(args);
+		
+		console.log('Creating class');
+		console.log(escapedArgs);
+		
+		child_process.exec('manage_class.py', escapedArgs);
+		
+		res.status(200).send();
+	} else {
+		res.status(500).send();
 	}
-	res.status(200).send();
-	//res.send('POST request to the homepage');
+	
 });
 
 app.get('/', function(req, res, next) {
