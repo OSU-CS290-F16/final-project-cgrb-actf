@@ -39,7 +39,7 @@ function clearDropDown(){
 function populateDropDown(classList){
     clearDropDown();
     var dropDown = document.getElementById('class-dropdown');
-    var json_file = FileHelper.readStringFromFileAtPath("class_list.json");
+    var json_file = FileHelper.readStringFromFileAtPath("/class_list.json");
     var class_list = JSON.parse(json_file);
     for(var i=0; i<class_list['name'].length; i++){
         var newLink = document.createElement('a');

@@ -20,8 +20,7 @@ app.use(bodyParser.json());
 // Run the python script to add a new class
 app.post('/classes/create/add', function(req, res) {
 	
-	console.log(req.body);
-	
+	console.log('foo bar baz');
 	if (req.body 
 			&& req.body.classCode
 			&& req.body.className
