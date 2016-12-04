@@ -60,6 +60,7 @@ function addClass() {
 			class-name
 			description
 	*/
+	
 	var instructorId = document.getElementById('instructor-id').value;
 	var instructorFirst = document.getElementById('instructor-first').value;
 	var instructorLast = document.getElementById('instructor-last').value;
@@ -68,28 +69,57 @@ function addClass() {
 	var className = document.getElementById('class-name').value;
 	var description = document.getElementById('description').value;
 	
-	console.log(instructorId + instructorFirst + instructorLast + email + classCode + className + description);
+	var error = '';
 	
-	var postRequest = new XMLHttpRequest();
-	postRequest.open('POST', '/classes/create/add');
-	postRequest.setRequestHeader('Content-Type', 'application/json');
+	if(!instructorId) {
+		error += 'Please enter your user id.\n';
+	}
+	if(!instructorFirst) {
+		error += 'Please enter your first name.\n';
+	}
+	if(!instructorLast) {
+		error += 'Please enter your last name.\n';
+	}
+	if(!email) {
+		error += 'Please enter your email.\n';
+	}
+	if(!classCode) {
+		error += 'Please enter a class code.\n';
+	}
+	if(!className) {
+		error += 'Please enter a class name.\n';
+	}
+	if(!description) {
+		error += 'Please enter a class description.\n';
+	}	
+	
+	if(error) {
+		alert('The following errors were detected:\n' + error);
+	}
+	else {
+		console.log(instructorId + instructorFirst + instructorLast + email + classCode + className + description);
+		
+		var postRequest = new XMLHttpRequest();
+		postRequest.open('POST', '/classes/create/add');
+		postRequest.setRequestHeader('Content-Type', 'application/json');
 
-	postRequest.addEventListener('load', function (event) {
-		var error;
-		if (event.target.status !== 200) {
-			error = event.target.response;
-		}
-	});
+		postRequest.addEventListener('load', function (event) {
+			var error;
+			if (event.target.status !== 200) {
+				error = event.target.response;
+			}
+		});
 
-	postRequest.send(JSON.stringify({
-		instructorId: instructorId,
-		instructorFirst: instructorFirst,
-		instructorLast: instructorLast,
-		email: email,
-		classCode: classCode,
-		className: className,
-		description: description
-	}));
+		postRequest.send(JSON.stringify({
+			instructorId: instructorId,
+			instructorFirst: instructorFirst,
+			instructorLast: instructorLast,
+			email: email,
+			classCode: classCode,
+			className: className,
+			description: description
+		}));
+	}
 }
 
 
