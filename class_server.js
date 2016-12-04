@@ -42,10 +42,12 @@ app.post('/classes/create/add', function(req, res) {
 		// Escape the arguments to prevent injection attacks
 		var escapedArgs = shellescape(args);
 		
-		console.log('Creating class');
-		console.log(escapedArgs);
+		var command = 'manage_class.py ' + escapedArgs;
 		
-		child_process.exec('manage_class.py', escapedArgs);
+		console.log('Creating class');
+		console.log(command);
+		
+		child_process.exec(command);
 		
 		res.status(200).send();
 	} else {
