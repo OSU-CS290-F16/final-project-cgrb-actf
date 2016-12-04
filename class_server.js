@@ -48,7 +48,8 @@ app.post('/classes/create/add', function(req, res) {
 		
 		child_process.exec(command);
 		
-		res.status(200).send();
+		//res.status(200).send();
+		res.json({foo: 4});
 	} else {
 		res.status(500).send();
 	}

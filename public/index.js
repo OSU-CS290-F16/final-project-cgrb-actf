@@ -108,6 +108,8 @@ function addClass() {
 			if (event.target.status !== 200) {
 				error = event.target.response;
 			}
+			
+			console.log(JSON.parse(this.response));
 		});
 
 		postRequest.send(JSON.stringify({
