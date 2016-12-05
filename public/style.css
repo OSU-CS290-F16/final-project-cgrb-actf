@@ -261,3 +261,8 @@ main h3{
 	background-color: white;
 	text-align: left;
 }
+
+.not-found {
+	width: 600px;
+	margin: 20px auto;
+}

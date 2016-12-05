@@ -79,7 +79,8 @@ app.get('/classes/create', function(req, res,next) {
 
 //404
 app.get('*', function(req, res) {
-  res.status(404).sendFile(path.join(__dirname, '404.html'));
+  //res.status(404).sendFile(path.join(__dirname, '404.html'));
+  res.render('404');
 });
 
 app.listen(port, function() {
