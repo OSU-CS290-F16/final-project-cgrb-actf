@@ -19,15 +19,14 @@ app.use(bodyParser.json());
 
 // Run the python script to add a new class
 app.post('/classes/create/add', function(req, res) {
-	
-	console.log('foo bar baz');
 	if (req.body 
 			&& req.body.classCode
 			&& req.body.className
 			&& req.body.instructorFirst 
 			&& req.body.instructorLast
 			&& req.body.email
-			&& req.body.instructorId)
+			&& req.body.instructorId
+			&& req.body.description)
 	{
 		// Construct the list of arguments
 		args = ['create_class'
@@ -36,7 +35,8 @@ app.post('/classes/create/add', function(req, res) {
 			,'-f', req.body.instructorFirst 
 			,'-l', req.body.instructorLast
 			,'-e', req.body.email
-			,'-u', req.body.instructorId];
+			,'-u', req.body.instructorId
+			,'-d', req.body.description]
 			
 		// Escape the arguments to prevent injection attacks
 		var escapedArgs = shellescape(args);
@@ -44,12 +44,15 @@ app.post('/classes/create/add', function(req, res) {
 		var command = 'manage_class.py ' + escapedArgs;
 		
 		console.log('Creating class');
-		console.log(command);
+		console.log('Executing command: ' + command);
 		
-		child_process.exec(command);
-		
-		//res.status(200).send();
-		res.json({foo: 4});
+		child_process.exec(command, function(error, stdout, stderr) {
+			res.json({
+					error: error,
+					stdout: stdout,
+					stderr: stderr
+			});
+		});
 	} else {
 		res.status(500).send();
 	}

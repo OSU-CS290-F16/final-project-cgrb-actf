@@ -49,6 +49,7 @@ function populateDropDown(classList){
     }
 }
 
+/* Sends the request to add a new class to the server */
 function addClass() {
 	/*
 		Read the following form ids:
@@ -61,6 +62,7 @@ function addClass() {
 			description
 	*/
 	
+	// Get the values from the form.
 	var instructorId = document.getElementById('instructor-id').value;
 	var instructorFirst = document.getElementById('instructor-first').value;
 	var instructorLast = document.getElementById('instructor-last').value;
@@ -71,6 +73,7 @@ function addClass() {
 	
 	var error = '';
 	
+	// Data validation
 	if(!instructorId) {
 		error += 'Please enter your user id.\n';
 	}
@@ -93,23 +96,42 @@ function addClass() {
 		error += 'Please enter a class description.\n';
 	}	
 	
+	// If all the forms were not filled out correctly, make an alert and stop the process
 	if(error) {
 		alert('The following errors were detected:\n' + error);
 	}
 	else {
-		console.log(instructorId + instructorFirst + instructorLast + email + classCode + className + description);
-		
 		var postRequest = new XMLHttpRequest();
 		postRequest.open('POST', '/classes/create/add');
 		postRequest.setRequestHeader('Content-Type', 'application/json');
 
+		// Callback when the data has been sent.
+		// Updates the page with the results.
 		postRequest.addEventListener('load', function (event) {
 			var error;
 			if (event.target.status !== 200) {
 				error = event.target.response;
+			}			
+			
+			res = JSON.parse(this.response);
+			console.log(JSON.parse(this.response));
+			
+			createConfirmation = document.querySelector('.create-confirmation');
+			
+			if (res.error) {
+				createConfirmation.innerHTML = '<div style="color:red;text-align:center">Creation failed</div>';
+			}	
+			else {
+				createConfirmation.innerHTML = '<div style="color:green;text-align:center">Creation succeeded</div>';
 			}
 			
-			console.log(JSON.parse(this.response));
+			createConfirmation.innerHTML +=
+				'<code>' + 
+				res.stdout.replace('\n', '<br>') +
+				'</code>';
+				
+			createConfirmation.style.display = 'block';
+		
 		});
 
 		postRequest.send(JSON.stringify({
