@@ -36,12 +36,16 @@ app.post('/classes/create/add', function(req, res) {
 			,'-l', req.body.instructorLast
 			,'-e', req.body.email
 			,'-u', req.body.instructorId
-			,'-d', req.body.description]
+			,'-d', req.body.description
+            ,'-n', 'jupyter.cgrb.oregonstate.local'
+            ,'-v', 'latest'
+            ,'-m', '8GB'
+            ,'-s', '1024']
 			
 		// Escape the arguments to prevent injection attacks
 		var escapedArgs = shellescape(args);
 		
-		var command = 'manage_class.py ' + escapedArgs;
+		var command = '/data/scripts/docker_python/manage_class.py ' + escapedArgs;
 		
 		console.log('Creating class');
 		console.log('Executing command: ' + command);
