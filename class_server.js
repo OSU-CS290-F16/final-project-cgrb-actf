@@ -21,59 +21,64 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-
 // Run the python script to add a new class
 app.post('/classes/create/add', function(req, res) {
-  //no conditional needed as all arguments are required
+  
+  if ( !req.body || !req.body['class-code'] ) {
+    res.redirect('/');
+  }
+
+  else {
 
   // Construct the list of arguments
-  args = ['create_class'
-    ,'-c', req.body['class-code']
-    ,'-r', req.body['class-name']
-    ,'-f', req.body['instructor-first'] 
-    ,'-l', req.body['instructor-last']
-    ,'-e', req.body.email
-    ,'-u', req.body['instructor-id']
-    ,'-d', req.body.description
-    ,'-n', 'jupyter.cgrb.oregonstate.local'
-    ,'-v', 'latest'
-    ,'-m', '8GB'
-    ,'-s', '1024']
+    args = ['create_class'
+      ,'-c', req.body['class-code']
+      ,'-r', req.body['class-name']
+      ,'-f', req.body['instructor-first'] 
+      ,'-l', req.body['instructor-last']
+      ,'-e', req.body.email
+      ,'-u', req.body['instructor-id']
+      ,'-d', req.body.description
+      ,'-n', 'jupyter.cgrb.oregonstate.local'
+      ,'-v', 'latest'
+      ,'-m', '8GB'
+      ,'-s', '1024']
 
-  // Escape the arguments to prevent injection attacks
-  var escapedArgs = shellescape(args);
+    // Escape the arguments to prevent injection attacks
+    var escapedArgs = shellescape(args);
 
-  var command = '/data/scripts/docker_python/manage_class.py ' + escapedArgs;
+    var command = '/data/scripts/docker_python/manage_class.py ' + escapedArgs;
 
-  console.log('Creating class');
-  console.log('Executing command: ' + command);
+    console.log('Creating class');
+    console.log('Executing command: ' + command);
 
-  child_process.exec(command, function(error, stdout, stderr) {
-    console.log('Command Result: ');
-    console.log(JSON.stringify({ error: error,
-      stdout: stdout,
-      stderr: stderr
-    }));
-    // on function complete re-render index
-    // to give time to build page, db info should be fine
-    update = true;
-    return res.render('index', { update: true });
-    update = false;
-  });
+    child_process.exec(command, function(error, stdout, stderr) {
+      console.log('Command Result: ');
+      console.log(JSON.stringify({ error: error,
+        stdout: stdout,
+        stderr: stderr
+      }));
+      // on function complete re-render index
+      // to give time to build page, db info should be fine
+      update = true;
+      return res.render('index', { update: true });
+      update = false;
+    });
+  }
 });
 
 app.get('/', function(req, res, next) {
-	res.render('index');
+  res.render('index');
 });
 
 app.get('/classes/:thisClass', function(req, res, next) {
-	var class_info = classes[req.params.thisClass];
+  var class_info = classes[req.params.thisClass];
 
-    if(class_info) {        
-		res.render('classes', class_info)  
-    } else {
-        next();
-    }
+  if(class_info) {        
+    res.render('classes', class_info)  
+  } else {
+    next();
+  }
 });
 
 app.get('/classes/create', function(req, res,next) {
