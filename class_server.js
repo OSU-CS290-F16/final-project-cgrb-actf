@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var classes = require('./class_info.json');
 var shellescape = require('shell-escape');
 var child_process = require('child_process');
+var update = false;
 
 var app = express();
 var port = process.env.PORT || 8889;
@@ -16,59 +17,49 @@ app.set('view engine', 'handlebars');
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/classes', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
 
 // Run the python script to add a new class
 app.post('/classes/create/add', function(req, res) {
-	if (req.body 
-			&& req.body.classCode
-			&& req.body.className
-			&& req.body.instructorFirst 
-			&& req.body.instructorLast
-			&& req.body.email
-			&& req.body.instructorId
-			&& req.body.description)
-	{
-		// Construct the list of arguments
-		args = ['create_class'
-			,'-c', req.body.classCode
-			,'-r', req.body.className
-			,'-f', req.body.instructorFirst 
-			,'-l', req.body.instructorLast
-			,'-e', req.body.email
-			,'-u', req.body.instructorId
-			,'-d', req.body.description
-            ,'-n', 'jupyter.cgrb.oregonstate.local'
-            ,'-v', 'latest'
-            ,'-m', '8GB'
-            ,'-s', '1024']
-			
-		// Escape the arguments to prevent injection attacks
-		var escapedArgs = shellescape(args);
-		
-		var command = '/data/scripts/docker_python/manage_class.py ' + escapedArgs;
-		
-		console.log('Creating class');
-		console.log('Executing command: ' + command);
-		
-		child_process.exec(command, function(error, stdout, stderr) {
-			//res.json({
-					//error: error,
-					//stdout: stdout,
-					//stderr: stderr
-			//});
-      console.log(JSON.stringify({ error: error,
-        stdout: stdout,
-        stderr: stderr
-      }));
-      // on function complete re-render index
-      res.redirect('/classes/' + req.body.classCode);
-		});
+  //no conditional needed as all arguments are required
 
+  // Construct the list of arguments
+  args = ['create_class'
+    ,'-c', req.body['class-code']
+    ,'-r', req.body['class-name']
+    ,'-f', req.body['instructor-first'] 
+    ,'-l', req.body['instructor-last']
+    ,'-e', req.body.email
+    ,'-u', req.body['instructor-id']
+    ,'-d', req.body.description
+    ,'-n', 'jupyter.cgrb.oregonstate.local'
+    ,'-v', 'latest'
+    ,'-m', '8GB'
+    ,'-s', '1024']
 
-	} else {
-		res.status(500).send();
-	}
-	
+  // Escape the arguments to prevent injection attacks
+  var escapedArgs = shellescape(args);
+
+  var command = '/data/scripts/docker_python/manage_class.py ' + escapedArgs;
+
+  console.log('Creating class');
+  console.log('Executing command: ' + command);
+
+  child_process.exec(command, function(error, stdout, stderr) {
+    console.log('Command Result: ');
+    console.log(JSON.stringify({ error: error,
+      stdout: stdout,
+      stderr: stderr
+    }));
+    // on function complete re-render index
+    // to give time to build page, db info should be fine
+    update = true;
+    return res.render('index', { update: true });
+    update = false;
+  });
 });
 
 app.get('/', function(req, res, next) {
