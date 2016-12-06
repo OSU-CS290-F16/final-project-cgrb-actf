@@ -51,12 +51,20 @@ app.post('/classes/create/add', function(req, res) {
 		console.log('Executing command: ' + command);
 		
 		child_process.exec(command, function(error, stdout, stderr) {
-			res.json({
-					error: error,
-					stdout: stdout,
-					stderr: stderr
-			});
+			//res.json({
+					//error: error,
+					//stdout: stdout,
+					//stderr: stderr
+			//});
+      console.log(JSON.stringify({ error: error,
+        stdout: stdout,
+        stderr: stderr
+      }));
+      // on function complete re-render index
+      res.redirect('/classes/' + req.body.classCode);
 		});
+
+
 	} else {
 		res.status(500).send();
 	}
