@@ -33,12 +33,12 @@ app.post('/classes/create/add', function(req, res) {
   // Construct the list of arguments
     args = ['create_class'
       ,'-c', req.body['class-code']
-      ,'-r', req.body['class-name']
+      ,'-r', "'" + req.body['class-name'] + "'"
       ,'-f', req.body['instructor-first'] 
       ,'-l', req.body['instructor-last']
       ,'-e', req.body.email
       ,'-u', req.body['instructor-id']
-      ,'-d', req.body.description
+      ,'-d', "'" + req.body.description + "'"
       ,'-n', 'jupyter.cgrb.oregonstate.local'
       ,'-v', 'latest'
       ,'-m', '8GB'
