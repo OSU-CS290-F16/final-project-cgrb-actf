@@ -266,3 +266,17 @@ main h3{
 	width: 600px;
 	margin: 20px auto;
 }
+
+.btn-style {
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid black;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-style:active, .btn-style:hover {
+  background-color: lightgray;
+}
+
+
