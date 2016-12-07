@@ -36,17 +36,3 @@ function clearDropDown(){
     }
 }
 
-function populateDropDown(classList){
-    clearDropDown();
-    var dropDown = document.getElementById('class-dropdown');
-    var json_file = FileHelper.readStringFromFileAtPath("/class_list.json");
-    var class_list = JSON.parse(json_file);
-    for(var i=0; i<class_list['name'].length; i++){
-        var newLink = document.createElement('a');
-        newLink.setAttribute('href', 'https://jupyter.cgrb.oregonstate.edu/classes/'+class_list['name'][i]);
-        newLink.textContent=class_list['readable'][i];
-        dropDown.appendChild(newLink);
-    }
-}
-
-populateDropDown();
