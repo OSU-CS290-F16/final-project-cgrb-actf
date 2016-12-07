@@ -93,13 +93,15 @@ app.get('/classes/:thisClass', function(req, res, next) {
   //var class_info = classes[req.params.thisClass];
   
 	var classes = mongoDB.collection('classes')  
-  	var classInfo = classes.find({ "code": req.params.thisClass});
+  	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
+  		console.log(document); 
+		if(document) {        
+   		res.render('classes', document)
+  		} else {
+   		next();
+		}  		
+  	});
 
-	if(classInfo) {        
-   	res.render('classes', classInfo)  
-  	} else {
-   	next();
-	}
 });
 
 app.get('/create', function(req, res, next) {
