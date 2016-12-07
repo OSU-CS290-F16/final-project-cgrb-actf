@@ -50,26 +50,38 @@ handlebars.registerHelper('class-list', function(context, options) {
 
 // Run the python script to add a new class
 app.post('/create/add', function(req, res) {
-  
   if ( !req.body || !req.body['class-code'] ) {
     res.redirect('/');
-  }
-
-  else {
-		newClass = {
-			"code": req.body['class-code'],
-			"name": req.body['class-name'],
-			"first": req.body['instructor-first'],
-			"last": req.body['instructor-last'],
-			"email": req.body.email,
-			"instructor-id": req.body['instructor-id'],
-			"description": req.body.description
-		}	
+  } else {
+		// Make sure the class doesn't already exist
 		
-		var classes = mongoDB.collection('classes');
-		classes.insert(newClass);		
-		classCache.push(newClass);
-		res.redirect('/classes/' + req.body['class-code']);
+		var alreadyInCache = false;
+				
+		classCache.forEach(function(item) {
+			if (item.code == req.body['class-code']) {
+				alreadyInCache = true;
+			}				
+		});
+		
+		if(alreadyInCache) {
+			res.render('already-exists');
+		} else {
+	
+			newClass = {
+				"code": req.body['class-code'],
+				"name": req.body['class-name'],
+				"first": req.body['instructor-first'],
+				"last": req.body['instructor-last'],
+				"email": req.body.email,
+				"instructor-id": req.body['instructor-id'],
+				"description": req.body.description
+			}	
+		
+			var classes = mongoDB.collection('classes');
+			classes.insert(newClass);		
+			classCache.push(newClass);
+			res.redirect('/classes/' + req.body['class-code']);
+		}
 	}  
 });
 
@@ -104,7 +116,7 @@ app.get('*', function(req, res) {
   res.render('404');
 });
 
-/* Connecto to the MongoDB and start up the web server */
+/* Connect to to the MongoDB and start up the web server */
 MongoClient.connect(mongoURL, function (err, db) {
   	if (err) {
    	console.log("== Unable to make connection to MongoDB Database.")
@@ -113,7 +125,7 @@ MongoClient.connect(mongoURL, function (err, db) {
   	mongoDB = db;
 
 	// initialize the class cache
-	classes = mongoDB.collection('classes')	
+	classes = mongoDB.collection('classes');
 
 	classes.find().each(function(err, item) {
 		if(item) {	
