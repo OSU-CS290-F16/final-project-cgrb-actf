@@ -89,7 +89,6 @@ app.post('/create/add', function(req, res) {
 app.get('/update/:thisClass', function(req, res, next) {
 	var classes = mongoDB.collection('classes');
   	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
-  		console.log(document); 
 		if(document) {   
 			res.render('update', document)
   		} else {
@@ -135,6 +134,33 @@ app.post('/update', function(req, res, next) {
 	}  
 });
 
+app.post('/delete/:thisClass', function(req, res, next) {
+	var classes = mongoDB.collection('classes');
+  	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
+		if(document) {
+			// Remove from the mongo DB
+			classes.remove({"code": req.params.thisClass});			
+			
+			// Remove from the local cache			
+			for(var i = 0; i < classCache.length; i++) {
+				if (classCache[i].code == req.params.thisClass) {
+					console.log(classCache[i].code, req.params.thisClass);
+					console.log(classCache);
+					classCache.splice(i, 1);
+					console.log(classCache);
+					break;
+				}
+			}
+			
+			
+			
+			res.render('delete', document)
+  		} else {
+			next();
+		}  		
+  	});
+});
+
 app.get('/', function(req, res, next) {
   res.render('index');
 });
@@ -142,7 +168,6 @@ app.get('/', function(req, res, next) {
 app.get('/classes/:thisClass', function(req, res, next) {
 	var classes = mongoDB.collection('classes')  
   	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
-  		console.log(document); 
 		if(document) {        
 			res.render('classes', document)
   		} else {

@@ -21,4 +21,14 @@
 			alt=' Dokuwiki '
 			height=50/></a>
 	</section>
+	
+	<form action="/update/{{code}}" method="GET">
+	<button type="submit" class='btn-style'>Edit</button>
+	</form>
+	
+	<form action="/delete/{{code}}" method="POST">
+	<button type="submit" class='btn-style'>Delete</button>
+	</form>
+
+	
 </main>
