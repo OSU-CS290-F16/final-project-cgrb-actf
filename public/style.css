@@ -75,6 +75,7 @@ nav {
 }
 .navbar-dropdown{
   display: inline-block;
+  cursor: pointer;
   padding: 10px 20px;
   color white;
 }
