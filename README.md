@@ -12,3 +12,12 @@ The containers and authentication methods together provide:
     Dynamic, adjustable, and per-class resource allocation (CPU, IO, RAM, disk)
     Per-class instructor and student groups
     Data persistence (for homeworks, grading, sharing of code, documents and data.)
+
+
+
+Server running an old version found at: jupyter.cgrb.oregonstate.edu
+
+Login to the introduction to MCB class with credentials:
+
+user: millelog_tech_f16
+pass: demo12
