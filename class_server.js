@@ -4,7 +4,7 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var handlebars = require('handlebars');
 var bodyParser = require('body-parser');
-var sanitizeHtml = require('sanitize-html');
+var escape = require('escape-html');
 var MongoClient = require('mongodb').MongoClient;
 var update = false;
 
@@ -42,7 +42,7 @@ handlebars.registerHelper('class-list', function(context, options) {
 	var links = "";
 
 	classCache.forEach(function(item) {
-		links += '<a href="/classes/' + sanitizeHtml(item.code) + '">' + sanitizeHtml(item.name) + '</a>';
+		links += '<a href="/classes/' + escape(item.code) + '">' + escape(item.name) + '</a>';
 	});
 	
 	return links;
