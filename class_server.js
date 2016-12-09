@@ -85,20 +85,93 @@ app.post('/create/add', function(req, res) {
 	}  
 });
 
+
+app.get('/update/:thisClass', function(req, res, next) {
+	var classes = mongoDB.collection('classes');
+  	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
+		if(document) {   
+			res.render('update', document)
+  		} else {
+			next();
+		}  		
+  	});
+});
+
+app.post('/update', function(req, res, next) {
+  if ( !req.body || !req.body['class-code'] ) {
+    res.redirect('/');
+  } else {
+		var classes = mongoDB.collection('classes')  
+		
+		// Update the data store
+		classes.update(
+			{"code": req.body['class-code']},
+			{ 
+				$set: {
+					"name": req.body['class-name'],
+					"first": req.body['instructor-first'],
+					"last": req.body['instructor-last'],
+					"email": req.body.email,
+					"instructor-id": req.body['instructor-id'],
+					"description": req.body.description
+					}
+			}		
+		);
+		
+		// Update the local cache		
+		classCache.forEach(function(item) {
+			if (item.code == req.body['class-code']) {
+				item.name = req.body['class-name'];
+				item.first = req.body['instructor-first'];
+				item.last = req.body['instructor-last'];
+				item.email = req.body.email;
+				item['instructor-id'] = req.body['instructor-id'];
+				item.description = req.body.description;
+			}
+		});
+		
+		res.redirect('/classes/' + req.body['class-code']);
+	}  
+});
+
+app.post('/delete/:thisClass', function(req, res, next) {
+	var classes = mongoDB.collection('classes');
+  	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
+		if(document) {
+			// Remove from the mongo DB
+			classes.remove({"code": req.params.thisClass});			
+			
+			// Remove from the local cache			
+			for(var i = 0; i < classCache.length; i++) {
+				if (classCache[i].code == req.params.thisClass) {
+					console.log(classCache[i].code, req.params.thisClass);
+					console.log(classCache);
+					classCache.splice(i, 1);
+					console.log(classCache);
+					break;
+				}
+			}
+			
+			
+			
+			res.render('delete', document)
+  		} else {
+			next();
+		}  		
+  	});
+});
+
 app.get('/', function(req, res, next) {
   res.render('index');
 });
 
 app.get('/classes/:thisClass', function(req, res, next) {
-  //var class_info = classes[req.params.thisClass];
-  
 	var classes = mongoDB.collection('classes')  
   	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
-  		console.log(document); 
 		if(document) {        
-   		res.render('classes', document)
+			res.render('classes', document)
   		} else {
-   		next();
+			next();
 		}  		
   	});
 

@@ -1,0 +1,49 @@
+
+
+<div class="create-form">
+	<h1>Update class: {{code}}</h1>
+	<div class="create-user-info">
+        <form action="/update" method="POST">
+		<div class="create-input">
+			<label for="instructor-id">User id</label>
+			<input type="text" id="instructor-id" name='instructor-id' value='{{instructor-id}}' required>
+		</div>
+
+		<div class="create-input">
+			<label for="instructor-first">First name</label>
+			<input type="text" id="instructor-first" name='instructor-first' value='{{first}}' required>
+		</div>
+
+		<div class="create-input">
+			<label for="instructor-last">Last name</label>
+			<input type="text" id="instructor-last" name='instructor-last' value='{{last}}' required>
+		</div>
+
+		<div class="create-input">
+			<label for="email">Email</label>
+			<input type="text" id="email" name='email' value='{{email}}' required>
+		</div>
+	</div>
+	
+	<div class="create-class-info">
+			<input type="text" id="class-code" name='class-code' value='{{code}}' required hidden>
+			
+		<div class="create-input">
+			<label for="class-name">Class name</label>
+			<input type="text" id="class-name" name='class-name' value='{{name}}' required>
+		</div>
+
+		<div class="create-input">
+			<label for="description">Description</label>
+			<!-- <input type="text" id="description"> -->
+			<textarea id="description" name='description'>{{description}}</textarea required>
+		</div>
+	</div>
+
+	<button type="submit" class='btn-style'>Update class</button>
+    </form>	
+	<div class="create-confirmation"></div>
+	
+</div>
+
+
