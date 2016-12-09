@@ -184,10 +184,6 @@ app.get('/create', function(req, res, next) {
 	res.render('create');
 });
 
-app.get('/favicon.ico', function(req, res) {
-  //do nothing
-});
-
 //404
 app.get('*', function(req, res) {
 	res.render('404');
