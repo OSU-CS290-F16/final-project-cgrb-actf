@@ -4,6 +4,7 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var handlebars = require('handlebars');
 var bodyParser = require('body-parser');
+var sanitizeHtml = require('sanitize-html');
 var MongoClient = require('mongodb').MongoClient;
 var update = false;
 
@@ -35,11 +36,13 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// Creates a list of classes for the dropdown.
+// This is done as a helper so the layout can use it without having to pass it in from every route
 handlebars.registerHelper('class-list', function(context, options) {
 	var links = "";
 
 	classCache.forEach(function(item) {
-		links += '<a href="/classes/' + item.code + '">' + item.name + '</a>';
+		links += '<a href="/classes/' + sanitizeHtml(item.code) + '">' + sanitizeHtml(item.name) + '</a>';
 	});
 	
 	return links;
@@ -83,9 +86,10 @@ app.post('/create/add', function(req, res) {
 });
 
 
+// Update page
 app.get('/update/:thisClass', function(req, res, next) {
 	var classes = mongoDB.collection('classes');
-  	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
+	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
 		if(document) {   
 			res.render('update', document)
   		} else {
@@ -94,6 +98,7 @@ app.get('/update/:thisClass', function(req, res, next) {
   	});
 });
 
+// POST action for the update page
 app.post('/update', function(req, res, next) {
   if ( !req.body || !req.body['class-code'] ) {
     res.redirect('/');
@@ -131,6 +136,7 @@ app.post('/update', function(req, res, next) {
 	}  
 });
 
+// Delete again
 app.post('/delete/:thisClass', function(req, res, next) {
 	var classes = mongoDB.collection('classes');
   	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
@@ -148,9 +154,6 @@ app.post('/delete/:thisClass', function(req, res, next) {
 					break;
 				}
 			}
-			
-			
-			
 			res.render('delete', document)
   		} else {
 			next();
@@ -158,10 +161,12 @@ app.post('/delete/:thisClass', function(req, res, next) {
   	});
 });
 
+// Index
 app.get('/', function(req, res, next) {
-  res.render('index');
+	res.render('index');
 });
 
+// Class view
 app.get('/classes/:thisClass', function(req, res, next) {
 	var classes = mongoDB.collection('classes')  
   	var classInfo = classes.findOne({"code": req.params.thisClass}, function(err, document) {
@@ -174,6 +179,7 @@ app.get('/classes/:thisClass', function(req, res, next) {
 
 });
 
+// Create page
 app.get('/create', function(req, res, next) {
 	res.render('create');
 });
@@ -184,15 +190,14 @@ app.get('/favicon.ico', function(req, res) {
 
 //404
 app.get('*', function(req, res) {
-  //res.status(404).sendFile(path.join(__dirname, '404.html'));
-  res.render('404');
+	res.render('404');
 });
 
 /* Connect to to the MongoDB and start up the web server */
 MongoClient.connect(mongoURL, function (err, db) {
   	if (err) {
-   	console.log("== Unable to make connection to MongoDB Database.")
-   	throw err;
+		console.log("== Unable to make connection to MongoDB Database.")
+		throw err;
   	}
   	mongoDB = db;
 
@@ -204,9 +209,8 @@ MongoClient.connect(mongoURL, function (err, db) {
 			classCache.push(item);
 		} else { // cache load complete; start the server up
 			app.listen(port, function () {
-    		console.log("== Listening on port", port);
-  		});
-		
+				console.log("== Listening on port", port);
+			});		
 		}
 	});
   
