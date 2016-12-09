@@ -5,7 +5,17 @@
         <h2>Class Description:</h2>
         <p>{{description}}</p>
     </div>
+
+	<form action="/update/{{code}}" method="GET" style="display:inline">
+	<button type="submit" class='btn-style' style="display:inline">Edit</button>
+	</form>
+	<form action="/delete/{{code}}" method="POST" style="display:inline">
+	<button type="submit" class='btn-style' style="display:inline">Delete</button>
+	</form>
+
+
 	<h2 id='platforms'>Platforms</h2>
+
 	
 	<section class="externals">
 		<a href='https://jupyter.cgrb.oregonstate.edu/{{code}}/jupyter'><img
@@ -22,13 +32,6 @@
 			height=50/></a>
 	</section>
 	
-	<form action="/update/{{code}}" method="GET">
-	<button type="submit" class='btn-style'>Edit</button>
-	</form>
-	
-	<form action="/delete/{{code}}" method="POST">
-	<button type="submit" class='btn-style'>Delete</button>
-	</form>
 
 	
 </main>
