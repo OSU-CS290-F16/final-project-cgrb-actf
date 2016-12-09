@@ -222,7 +222,7 @@ main h3{
 	text-align: center;
 }
 
-.create-class-info, .create-user-info {
+.create-class-info, .create-user-info, .info-box {
 	width: 300px;
 	border: 2px solid black;
 	border-radius: 10px;
