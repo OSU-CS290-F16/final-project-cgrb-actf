@@ -23,6 +23,7 @@
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.6",
     "mongodb": "^2.2.12",
+    "sanitize-html": "^1.13.0",
     "shell-escape": "^0.2.0"
   }
 }

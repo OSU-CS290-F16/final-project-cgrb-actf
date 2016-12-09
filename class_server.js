@@ -4,9 +4,6 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var handlebars = require('handlebars');
 var bodyParser = require('body-parser');
-//var classes = require('./class_info.json');
-//var shellescape = require('shell-escape');
-//var child_process = require('child_process');
 var MongoClient = require('mongodb').MongoClient;
 var update = false;
 
