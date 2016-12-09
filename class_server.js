@@ -147,10 +147,7 @@ app.post('/delete/:thisClass', function(req, res, next) {
 			// Remove from the local cache			
 			for(var i = 0; i < classCache.length; i++) {
 				if (classCache[i].code == req.params.thisClass) {
-					console.log(classCache[i].code, req.params.thisClass);
-					console.log(classCache);
 					classCache.splice(i, 1);
-					console.log(classCache);
 					break;
 				}
 			}
@@ -195,6 +192,8 @@ MongoClient.connect(mongoURL, function (err, db) {
 		console.log("== Unable to make connection to MongoDB Database.")
 		throw err;
   	}
+	
+	console.log("== Connection established to MongoDB.")
   	mongoDB = db;
 
 	// initialize the class cache
